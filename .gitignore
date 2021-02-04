@@ -1,0 +1,4 @@
+/data_scraping/
+/app/__pycache__/
+/mysql/DB/*
+.DS_Store

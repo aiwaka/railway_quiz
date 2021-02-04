@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="status" style="display: none;">
+  </div>
+  <div class="container" id="container_go_to_top">
+    <a class="btn btn-info btn-sm" href="/">TOPへ</a>
+  </div>
+  {% if not viewmode %}
+  <div class="divider"></div>
+  <div class="container" id="container_question">
+    <h2>第{{question_num}}問</h2>
+    <p>{{question_text}}</p>
+    <h3>答えを入力</h3>
+    <form class="form-inline" id="answer_input_and_check" action="" onsubmit="return false">
+      {% if viewmode %}
+      <div class="form-group">
+        <input type="button" name="check" onclick="display_answer()" class="btn btn-primary btn-sm" value="check" />
+      </div>
+      {% else %}
+      <div class="form-group">
+        <input type="text" class="answertext form-control form-control-sm" name="answertext" autofocus autocomplete="off" />
+        <input type="button" name="check" onclick="check_answer()" class="btn btn-primary btn-sm" value="check" />
+      </div>
+      {% endif %}
+    </form>
+  </div>
+  {% endif %}
+  {% if not viewmode %}
+  <div id="output_text", style="display: none;">
+  {% else %}
+  <div id="output_text">
+  {% endif %}
+    <div class="divider"></div>
+    <div class="container" id="container_result">
+      {% if not viewmode%}
+      <h2>結果</h2>
+      <div id="correctness" class=""></div>
+      <p class="answer_text">解答：<span class="answer">{{ answer }}</span></p>
+      {% else %}
+      <p class="answer_text"><span class="answer">{{ answer }}</span></p>
+      {% endif %}
+
+      <div class="card-group">
+        {% if station_info %}
+        <div class="card">
+          <div class="card-header">駅の情報</div>
+          <!--<div id="station_info" class="card-body">-->
+            <table class="card-body table table-striped">
+              <tbody>
+                <tr>
+                  <th>駅番号</th><td>{{station_info['駅番号']}}</td>
+                </tr>
+                <tr>
+                  <th>所在地</th><td>{{station_info['所在地']}}</td>
+                </tr>
+                <tr>
+                  <th>キロポスト</th><td>{{station_info['キロポスト']}}</td>
+                </tr>
+                <tr>
+                  <th>駅間距離</th><td>{{station_info['駅間距離']}}</td>
+                </tr>
+              </tbody>
+            </table>
+          <!--</div>-->
+        </div>
+        {% endif %}
+        {% if connect_routes %}
+        <div class="card">
+          <div class="card-header">接続路線</div>
+          <div id="connect_routes" class="card-body">
+            {% for route in connect_routes %}
+            <div class="connect_routes_element">{{route}}</div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+        {% if description %}
+        <div class="card">
+          <div class="card-header">参考</div>
+          <div id="station_description" class="card-body">
+            {{description}}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <form action="/quiz" method="post">
+        <input type="hidden" id="submit_correctness" name="correctness" >
+        {% if not viewmode %}
+          <input type="submit" id='next_button' name="submit" class="btn btn-primary btn-sm" value="next" disabled />
+        {% else %}
+          <input type="submit" id='next_button' name="submit" class="btn btn-primary btn-sm" value="next"/>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+{% endblock %}

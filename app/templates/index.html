@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+  <form action="/start" method="post">
+    <div class="form-group">
+      <label for="company_select">会社選択</label>
+      <select class="form-control form-control-sm" name="company_select" id="company_select" required>
+        {% for company in companies %}
+        <option value={{dic_companies_ja_to_eng[company]}}>{{company}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="route_select">路線選択</label>
+      <select class="form-control form-control-sm" name="route_select" id="route_select" required>
+        {% for route in routes %}
+        <option value={{dic_routes_ja_to_eng[route]}}>{{route}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="updown">方向</label>
+      <div class="form-check-inline">
+        <input type="radio" class="form-check-input" id="updown1" name="updown" value="down" checked>
+        <label class="form-check-label" for="updown1">下り</label>
+      </div>
+      <div class="form-check-inline">
+        <input type="radio" class="form-check-input" id="updown2" name="updown" value="up">
+        <label class="form-check-label" for="updown2">上り</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="viewflag">正解確認モード</label>
+      <div class="form-check-inline">
+        <input type="radio" class="form-check-input" id="viewflag1" name="viewflag" value="on">
+        <label class="form-check-label" for="viewflag1">ON</label>
+      </div>
+      <div class="form-check-inline">
+        <input type="radio" class="form-check-input" id="viewflag2" name="viewflag" value="off" checked>
+        <label class="form-check-label" for="viewflag2">OFF</label>
+      </div>
+    </div>
+    <button id="start" type="submit" class="btn btn-primary" name="submit" value="start">START</button>
+  </form>
+{% endblock %}

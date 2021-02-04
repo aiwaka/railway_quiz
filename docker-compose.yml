@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./app:/app"
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+      FLASK_APP: app.py
+      FLASK_ENV: development
+    command: flask run -h 0.0.0.0
+
+  mysql:
+    build: ./mysql/
+    volumes:
+      - ./mysql/DB_init:/docker-entrypoint-initdb.d # 初期化SQL
+      - ./mysql/DB:/var/lib/mysql # データを保存するためにボリュームマウント
+    image: original_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root

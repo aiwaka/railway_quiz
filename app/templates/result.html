@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+  <p>終了！</p>
+  <div id="resultview"></div>
+  {% if results %}
+    <h2>結果</h2>
+    {% for result in results %}
+      <p>{{ result }}</p>
+    {% endfor %}
+  {% endif %}
+  <div class="container" id="container_go_to_top">
+    <a class="btn btn-info" href="/">TOPへ</a>
+  </div>
+</div>
+{% endblock %}
