@@ -3,6 +3,8 @@ version: "3"
 services:
   app:
     build: .
+    depends_on:
+      - mysql
     ports:
       - "5000:5000"
     volumes:
@@ -11,7 +13,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       FLASK_APP: app.py
-      FLASK_ENV: development
+      #FLASK_ENV: development
     command: flask run -h 0.0.0.0
 
   mysql:
